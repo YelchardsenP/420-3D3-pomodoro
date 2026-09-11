@@ -14,4 +14,15 @@ class LoggerSession(Observateur):
         # Écrivez dans le fichier SEULEMENT si une nouvelle session est complétée
         # (comparez avec self._derniere_session)
         # Mettez à jour self._derniere_session
-        pass
+
+        donnees = sujet.get_donnees()
+        sessions_completees = donnees["sessions_completees"]
+
+        # Écrire dans le log
+                horodatage = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                with open("pomodoro.log", 'a') as f:
+                    f.write(
+                        f"{horodatage} | Session {sessions_completees} "
+                        f"completee\n"
+                    )
+
