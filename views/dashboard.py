@@ -26,7 +26,12 @@ class Dashboard(tk.Tk):
         # À compléter :
         # Instanciez AffichageEtat, AffichageTemps, BarreProgression,
         # CompteurSessions et LoggerSession
-        pass
+        self._etat = AffichageEtat(self)
+        self._temps = AffichageTemps(self)
+        self._barre = BarreProgression(self)
+        self._sessions = CompteurSessions(self)
+        self._logger = LoggerSession(self)
+        
 
     def _abonner_observateurs(self) -> None:
         # À compléter :
