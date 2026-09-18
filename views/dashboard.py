@@ -34,9 +34,14 @@ class Dashboard(tk.Tk):
         
 
     def _abonner_observateurs(self) -> None:
-        # À compléter :
-        # Abonnez tous les observateurs au minuteur
-        pass
+        
+        self._minuteur.abonner(self._etat)
+        self._minuteur.abonner(self._temps)
+        self._minuteur.abonner(self._barre)
+        self._minuteur.abonner(self._sessions)
+        self._minuteur.abonner(self._logger)
+        
+        
 
     def _creer_boutons(self) -> None:
         frame = tk.Frame(self)
@@ -57,23 +62,48 @@ class Dashboard(tk.Tk):
         # À compléter :
         # Activez le minuteur et démarrez la boucle _tick()
         # Mettez à jour les boutons
-        pass
+        self._en_marche = True
+        self._btn_start.config(state=tk.DISABLED)
+        self._btn_pause.config(state=tk.NORMAL)
+
+        self._tick()
 
     def _pause(self) -> None:
         # À compléter :
         # Appelez basculer_pause() sur le minuteur
         # Mettez à jour le texte du bouton
         # Si on reprend, relancez _tick()
-        pass
+        self._minuteur.basculer_pause()
+
+        if self._minuteur._en_pause:
+            self._btn_pause.config(text="Reprendre")
+        
+        else:
+            self._btn_pause.config(text="Pause")
+            self._tick()
+
+        
 
     def _reset(self) -> None:
         # À compléter :
         # Réinitialisez le minuteur
         # Mettez à jour les boutons
-        pass
+        self.en_marche = False
+        self._minuteur.reinitialiser()
+
+        self._btn_start.config(state=tk.NORMAL)
+        self._btn_pause.config(state=tk.DISABLED)
+        self._btn_pause.config(text="Pause")
+
+        
+
 
     def _tick(self) -> None:
         # À compléter :
         # Si en marche et pas en pause : appeler minuteur.tick()
         # Planifier le prochain appel avec self.after()
-        pass
+        if self._en_marche and not self._minuteur._en_pause:
+            self._minuteur.tick()
+
+        if self._en_marche:
+            self.after(self.INTERVALLE_MS, self._tick)
