@@ -80,7 +80,7 @@ class Dashboard(tk.Tk):
         
         else:
             self._btn_pause.config(text="Pause")
-            self._tick()
+            
 
         
 
@@ -88,7 +88,7 @@ class Dashboard(tk.Tk):
         # À compléter :
         # Réinitialisez le minuteur
         # Mettez à jour les boutons
-        self.en_marche = False
+        self._en_marche = False
         self._minuteur.reinitialiser()
 
         self._btn_start.config(state=tk.NORMAL)
@@ -102,8 +102,9 @@ class Dashboard(tk.Tk):
         # À compléter :
         # Si en marche et pas en pause : appeler minuteur.tick()
         # Planifier le prochain appel avec self.after()
-        if self._en_marche and not self._minuteur._en_pause:
-            self._minuteur.tick()
-
         if self._en_marche:
+            self._minuteur.tick()
             self.after(self.INTERVALLE_MS, self._tick)
+
+      
+            
